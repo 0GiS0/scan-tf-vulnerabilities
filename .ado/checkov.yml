@@ -22,6 +22,7 @@ steps:
       script: |
         checkov -f *.tf -o sarif --no-fail-on-crash
   - task: PublishBuildArtifacts@1
+    continueOnError: true
     inputs:
       PathtoPublish: 'results.sarif'
       ArtifactName: 'CodeAnalysisLogs'
