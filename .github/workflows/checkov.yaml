@@ -20,6 +20,7 @@ jobs:
       - name: Checkov GitHub Action
         uses: bridgecrewio/checkov-action@v12
         with:
+          file: "*.tf"
           output_format: cli,sarif
           output_file_path: console,results.sarif        
       - name: Upload SARIF file

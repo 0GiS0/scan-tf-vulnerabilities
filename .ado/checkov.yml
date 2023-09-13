@@ -20,7 +20,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        checkov -f *.tf -o sarif --exit-code 0
+        checkov -f *.tf -o sarif --no-fail-on-crash
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: 'results.sarif'
