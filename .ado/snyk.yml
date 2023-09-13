@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Bash@2
+    displayName: "Install Snyc CLI"
+    inputs:
+      script: |
+        brew tap snyk/tap
+        brew install snyk
+
+  - task: Bash@2
+    displayName: "Scan Terraform files"
+    inputs:
+      script: |
+        snyk iac test --sarif > $(Build.ArtifactStagingDirectory)/snyk-iac.sarif || true 
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/snyk-iac.sarif'
+      ArtifactName: 'CodeAnalysisLogs'
+      publishLocation: 'Container'
+
