@@ -11,25 +11,19 @@ pool:
 
 steps:
   - task: Bash@3
-    displayName: 'Install terrascan'
+    displayName: 'Install checkov'
     inputs:
       targetType: 'inline'
-      script: |
-        curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Darwin_x86_64.tar.gz")" > terrascan.tar.gz
-        tar -xf terrascan.tar.gz terrascan && rm terrascan.tar.gz
-        install terrascan /usr/local/bin && rm terrascan
-        terrascan
-
+      script: 'pip3 install checkov'
   - task: Bash@3
-    continueOnError: true
     displayName: 'Checkov Static Code Analysis'
     inputs:
       targetType: 'inline'
       script: |
-        checkov -f *.tf -o sarif --no-fail-on-crash
+        checkov -d . -o sarif > $(Build.ArtifactStagingDirectory)/checkov-results.sarif
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: 'results.sarif'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/checkov-results.sarif'
       ArtifactName: 'CodeAnalysisLogs'
       publishLocation: 'Container'
 
