@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Checkov GitHub Action
+        # https://github.com/bridgecrewio/checkov-action
         uses: bridgecrewio/checkov-action@v12
         with:
           file: "*.tf"
