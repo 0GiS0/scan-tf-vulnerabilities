@@ -32,5 +32,5 @@ steps:
   - task: CmdLine@2
     displayName: "HIGH/CRIT - Trivy vulnerability scanner in IaC mode"
     inputs:
-    script: |
-      trivy config --severity HIGH,CRITICAL --exit-code 1 $(Agent.BuildDirectory)/src/${{ parameters.root_directory }}
+      script: |
+        trivy config --severity HIGH,CRITICAL --exit-code 1 $(Agent.BuildDirectory)/src/${{ parameters.root_directory }}
