@@ -28,10 +28,11 @@ steps:
         terrascan init
   - task: Bash@3
     continueOnError: true
-    displayName: 'Downloads the latest policies'
+    displayName: 'Scan the terraform files'
     inputs:
       targetType: 'inline'
       script: |
+        terrascan scan -t azure -f *.tf
         terrascan scan -t azure -f *.tf -o sarif > results.sarif
   - task: PublishBuildArtifacts@1
     inputs:
