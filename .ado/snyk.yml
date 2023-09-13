@@ -22,6 +22,7 @@ steps:
     displayName: "Scan Terraform files"
     inputs:
       script: |
+        snyk iac test --sarif
         snyk iac test --sarif > $(Build.ArtifactStagingDirectory)/snyk-iac.sarif || true 
   - task: PublishBuildArtifacts@1
     inputs:
