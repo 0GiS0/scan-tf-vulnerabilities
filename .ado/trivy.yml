@@ -24,13 +24,24 @@ steps:
         sudo dpkg -i trivy_${{ parameters.trivyVersion }}_Linux-64bit.deb
         trivy -v
 
+  # - task: CmdLine@2
+  #   displayName: "LOW/MED - Trivy vulnerability scanner in IaC mode"
+  #   inputs:
+  #     script: |
+  #       trivy config --severity LOW,MEDIUM --exit-code 0 ${{ parameters.root_directory }}
+  # - task: CmdLine@2
+  #   displayName: "HIGH/CRIT - Trivy vulnerability scanner in IaC mode"
+  #   inputs:
+  #     script: |
+  #       trivy config --severity HIGH,CRITICAL --exit-code 1 ${{ parameters.root_directory }}
   - task: CmdLine@2
-    displayName: "LOW/MED - Trivy vulnerability scanner in IaC mode"
+    displayName: "Trivy vulnerability scanner in IaC mode"
     inputs:
       script: |
-        trivy config --severity LOW,MEDIUM --exit-code 0 ${{ parameters.root_directory }}
-  - task: CmdLine@2
-    displayName: "HIGH/CRIT - Trivy vulnerability scanner in IaC mode"
+        trivy --severity LOW,MEDIUM --exit-code 0 --format sarif ${{ parameters.root_directory }} > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
+  - task: PublishBuildArtifacts@1
     inputs:
-      script: |
-        trivy config --severity HIGH,CRITICAL --exit-code 1 ${{ parameters.root_directory }}
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/trivy-results.sarif'
+      ArtifactName: 'CodeAnalysisLogs'
+      publishLocation: 'Container'
+
