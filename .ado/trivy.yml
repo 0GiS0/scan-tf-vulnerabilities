@@ -38,7 +38,7 @@ steps:
     displayName: "Trivy vulnerability scanner in IaC mode"
     inputs:
       script: |
-        trivy --severity LOW,MEDIUM --exit-code 0 --format sarif ${{ parameters.root_directory }} > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
+        trivy config --severity LOW,MEDIUM --exit-code 0 --format sarif ${{ parameters.root_directory }} > $(Build.ArtifactStagingDirectory)/trivy-results.sarif
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/trivy-results.sarif'
