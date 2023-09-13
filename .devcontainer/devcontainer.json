@@ -16,7 +16,9 @@
 		"vscode": {
 			"extensions": [
 				"GitHub.copilot",
-				"4ops.terraform"
+				"4ops.terraform",
+				"redhat.vscode-yaml",
+				"ms-azure-devops.azure-pipelines"
 			]
 		}
 	}
