@@ -16,13 +16,13 @@ steps:
       targetType: 'inline'
       script: 'pip3 install checkov'
   - task: Bash@3
+    continueOnError: true
     displayName: 'Checkov Static Code Analysis'
     inputs:
       targetType: 'inline'
       script: |
         checkov -f *.tf -o sarif --no-fail-on-crash
   - task: PublishBuildArtifacts@1
-    continueOnError: true
     inputs:
       PathtoPublish: 'results.sarif'
       ArtifactName: 'CodeAnalysisLogs'
