@@ -10,7 +10,8 @@ trivy config .
 # Scan using checkov
 # ------------------------------------------------------------------------------
 checkov -h
-checkov -d .
+# Scan only terraform files
+checkov -f *.tf
 
 # Scan using terrascan
 # ------------------------------------------------------------------------------
