@@ -14,8 +14,9 @@ steps:
     displayName: "Install Snyc CLI"
     inputs:
       script: |
-        brew tap snyk/tap
-        brew install snyk
+       curl --compressed https://static.snyk.io/cli/latest/snyk-linux -o snyk
+       chmod +x ./snyk
+       mv ./snyk /usr/local/bin/
 
   - task: CmdLine@2
     displayName: "Scan Terraform files"
