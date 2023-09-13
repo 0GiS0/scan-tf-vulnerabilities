@@ -21,12 +21,18 @@ steps:
         terrascan
 
   - task: Bash@3
-    continueOnError: true
-    displayName: 'Checkov Static Code Analysis'
+    displayName: 'Downloads the latest policies'
     inputs:
       targetType: 'inline'
       script: |
-        checkov -f *.tf -o sarif --no-fail-on-crash
+        terrascan init
+  - task: Bash@3
+    continueOnError: true
+    displayName: 'Downloads the latest policies'
+    inputs:
+      targetType: 'inline'
+      script: |
+        terrascan scan -t azure -f *.tf -o sarif > results.sarif
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: 'results.sarif'
