@@ -10,14 +10,14 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - task: Bash@2
+  - task: CmdLine@2
     displayName: "Install Snyc CLI"
     inputs:
       script: |
         brew tap snyk/tap
         brew install snyk
 
-  - task: Bash@2
+  - task: CmdLine@2
     displayName: "Scan Terraform files"
     inputs:
       script: |
