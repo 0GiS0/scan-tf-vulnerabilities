@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Bash@3
+    displayName: 'Install checkov'
+    inputs:
+      targetType: 'inline'
+      script: 'pip3 install checkov'
+  - task: Bash@3
+    displayName: 'Checkov Static Code Analysis'
+    inputs:
+      targetType: 'inline'
+      script: |
+        checkov -d . -o sarif > $(Build.ArtifactStagingDirectory)/checkov-results.sarif
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/checkov-results.sarif'
+      ArtifactName: 'CodeAnalysisLogs'
+      publishLocation: 'Container'
+
