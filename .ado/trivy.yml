@@ -28,9 +28,9 @@ steps:
     displayName: "LOW/MED - Trivy vulnerability scanner in IaC mode"
     inputs:
       script: |
-        trivy config --severity LOW,MEDIUM --exit-code 0 $(Agent.BuildDirectory)/src/${{ parameters.root_directory }}
+        trivy config --severity LOW,MEDIUM --exit-code 0 ${{ parameters.root_directory }}
   - task: CmdLine@2
     displayName: "HIGH/CRIT - Trivy vulnerability scanner in IaC mode"
     inputs:
       script: |
-        trivy config --severity HIGH,CRITICAL --exit-code 1 $(Agent.BuildDirectory)/src/${{ parameters.root_directory }}
+        trivy config --severity HIGH,CRITICAL --exit-code 1 ${{ parameters.root_directory }}
