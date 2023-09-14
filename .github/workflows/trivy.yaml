@@ -28,6 +28,17 @@ jobs:
         with:
           scan-type: 'config'
           hide-progress: false
+          format: 'table'
+          output: 'trivy-results.sarif'
+          exit-code: '1'
+          ignore-unfixed: true
+          # severity: 'CRITICAL,HIGH'      
+
+      - name: Run Trivy vulnerability scanner in IaC mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          hide-progress: false
           format: 'sarif'
           output: 'trivy-results.sarif'
           exit-code: '1'
