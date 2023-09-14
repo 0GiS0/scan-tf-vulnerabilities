@@ -29,7 +29,9 @@ jobs:
       security-events: write
     uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/terrascan.yaml@main
   snyk:
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     permissions:
       contents: read
-      security-events: write
+      security-events: write    
     uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/snyk.yaml@main
