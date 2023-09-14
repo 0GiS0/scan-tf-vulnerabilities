@@ -2,7 +2,12 @@ name: Checkov Scan
 
 on:
   workflow_call:    
-
+    inputs:
+      working-directory:
+        description: 'The directory to run Checkov in'
+        type: string
+        required: false
+        default: '.'
 jobs:
   scan:
     permissions:
@@ -17,9 +22,10 @@ jobs:
         with:
           file: "*.tf"
           output_format: cli,sarif
-          output_file_path: console,results.sarif        
+          output_file_path: console,results.sarif
+          working-directory: ${{ inputs.working-directory }}    
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         if: success() || failure()
         with:
-          sarif_file: results.sarif
+          sarif_file: ${{ inputs.working-directory }}/results.sarif

@@ -2,6 +2,12 @@ name: Trivy Scan
 
 on:
   workflow_call:
+    inputs:
+      working-directory:
+        description: 'The directory to run Trivy in'
+        type: string
+        required: false
+        default: '.'
 
 jobs:
   scan:
@@ -23,8 +29,9 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           # severity: 'CRITICAL,HIGH'
+          working-directory: ${{ inputs.working-directory }}
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: ${{ inputs.working-directory }}/trivy-results.sarif

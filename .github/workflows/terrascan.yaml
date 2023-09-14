@@ -2,7 +2,12 @@ name: Terrascan Scan
 
 on:
   workflow_call:
-
+    inputs:
+      working-directory:
+        description: 'The directory to run Terrascan in'
+        type: string
+        required: false
+        default: '.'
 jobs:
   scan:
     permissions:
@@ -27,7 +32,8 @@ jobs:
         #policy_path:
         #skip_rules:
         #config_path:
+        working-directory: ${{ inputs.working-directory }}
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: terrascan.sarif
+        sarif_file: ${{ inputs.working-directory }}/terrascan.sarif
