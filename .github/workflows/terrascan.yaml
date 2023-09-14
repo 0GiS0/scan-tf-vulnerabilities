@@ -4,36 +4,41 @@ on:
   workflow_call:
     inputs:
       working-directory:
-        description: 'The directory to run Terrascan in'
+        description: "The directory to run Terrascan in"
         type: string
         required: false
-        default: '.'
+        default: "."
 jobs:
   scan:
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     permissions:
       contents: read
-      security-events: write  
-    runs-on: ubuntu-latest    
+      security-events: write
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Run Terrascan
-      id: terrascan
-      # https://github.com/tenable/terrascan-action/
-      uses: tenable/terrascan-action@main
-      with:
-        iac_type: 'terraform'
-        iac_version: 'v14'
-        policy_type: 'azure'
-        # only_warn: true
-        sarif_upload: true
-        #non_recursive:
-        #iac_dir:
-        #policy_path:
-        #skip_rules:
-        #config_path:
-        working-directory: ${{ inputs.working-directory }}
-    - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: ${{ inputs.working-directory }}/terrascan.sarif
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run Terrascan
+        id: terrascan
+        # https://github.com/tenable/terrascan-action/
+        uses: tenable/terrascan-action@main
+        with:
+          iac_type: "terraform"
+          iac_version: "v14"
+          policy_type: "azure"
+          # only_warn: true
+          sarif_upload: true
+          #non_recursive:
+          #iac_dir:
+          #policy_path:
+          #skip_rules:
+          #config_path:
+
+      - name: Inspect working directory
+        run: ls -la
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: terrascan.sarif
