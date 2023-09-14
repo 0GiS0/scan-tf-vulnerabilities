@@ -1,21 +1,18 @@
 name: Checkov Scan
 
 on:
-  workflow_call:    
+  workflow_call:
     inputs:
       working-directory:
-        description: 'The directory to run Checkov in'
+        description: "The directory to run Checkov in"
         type: string
         required: false
-        default: '.'
+        default: "."
 jobs:
   scan:
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
     permissions:
       contents: read
-      security-events: write      
+      security-events: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,10 +20,10 @@ jobs:
         # https://github.com/bridgecrewio/checkov-action
         uses: bridgecrewio/checkov-action@v12
         with:
-          file: "*.tf"
+          directory: ${{ inputs.working-directory }}
           output_format: cli,sarif
-          output_file_path: console,results.sarif      
-      
+          output_file_path: console,results.sarif
+
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         if: success() || failure()
