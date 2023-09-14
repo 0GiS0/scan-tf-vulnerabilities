@@ -28,11 +28,9 @@ jobs:
         with:
           scan-type: 'config'
           hide-progress: false
-          format: 'github'         
+          format: 'table'         
           exit-code: '0'
           ignore-unfixed: true
-          github-pat: ${{ secrets.GITHUB_TOKEN }}
-           
 
       - name: Run Trivy vulnerability scanner in IaC mode generate SARIF file
         uses: aquasecurity/trivy-action@master
