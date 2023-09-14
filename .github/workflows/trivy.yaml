@@ -12,9 +12,6 @@ on:
 jobs:
   
   scan:
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
     permissions:
       contents: read
       security-events: write      
