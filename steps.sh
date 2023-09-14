@@ -23,7 +23,7 @@ terrascan scan -d .
 snyk -h
 snyk auth
 snyk iac test --help
-snyk iac test . --report
+SNYK_TOKEN=1a0bee11-920a-477a-9c9f-3dcf40b26a41 snyk iac test --sarif
 
 # Test a Terraform plan file
 terraform init \

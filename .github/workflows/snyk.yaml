@@ -15,13 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set up Snyk CLI to check for security issues
-        # Snyk can be used to break the build when it detects security issues.
-        # In this case we want to upload the SAST issues to GitHub Code Scanning
         uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
               
       # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
       - name: Snyk IaC test and report
-        run: |           
+        run: |
+          snyk iac test --sarif 
           snyk iac test --sarif > snyk-iac.sarif || true       
 
         # Push the Snyk Code results into GitHub Code Scanning tab
