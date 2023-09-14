@@ -12,7 +12,6 @@ jobs:
     env:
       # This is where you will need to introduce the Snyk API token created with your Snyk account
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      SARIF_FOLDER: sarif-results
     steps:
       - uses: actions/checkout@v3
       - name: Set up Snyk CLI to check for security issues
@@ -23,10 +22,10 @@ jobs:
       # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
       - name: Snyk IaC test and report
         run: |           
-          snyk iac test --sarif > ../${{env.SARIF_FOLDER}}/snyk-iac.sarif || true       
+          snyk iac test --sarif > snyk-iac.sarif || true       
 
         # Push the Snyk Code results into GitHub Code Scanning tab
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: ${{env.SARIF_FOLDER}}
+          sarif_file: snyk-iac.sarif
