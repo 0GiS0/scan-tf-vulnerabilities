@@ -1,13 +1,7 @@
-name: checkov-analysis
+name: Checkov Scan
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
-
-permissions: read-all
+  workflow_call:    
 
 jobs:
   scan:

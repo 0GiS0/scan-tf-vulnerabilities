@@ -1,0 +1,23 @@
+name: IaC scans
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".ado/**"
+      - "README.md"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  checkov:
+    uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/tools/checkov.yml@main
+  trivy:
+    uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/tools/trivy.yml@main
+  terrascan:
+    uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/tools/terrascan.yml@main
+  snyk:
+    uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/tools/snyk.yml@main

@@ -1,4 +1,7 @@
-on: [push]
+name: Terrascan Scan
+
+on:
+  workflow_call:
 
 jobs:
   scan:
