@@ -31,6 +31,7 @@ jobs:
           format: 'table'         
           exit-code: '0'
           ignore-unfixed: true
+          scan-ref: ${{ inputs.working-directory }}
 
       - name: Run Trivy vulnerability scanner in IaC mode generate SARIF file
         uses: aquasecurity/trivy-action@master
@@ -42,6 +43,7 @@ jobs:
           output: 'trivy-results.sarif'
           exit-code: '1'
           ignore-unfixed: true
+          scan-ref: ${{ inputs.working-directory }}
           # severity: 'CRITICAL,HIGH'          
       - name: Inspect working directory        
         run: ls -la
