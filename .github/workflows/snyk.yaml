@@ -2,9 +2,9 @@ name: Snyk Scan
 
 on:
   workflow_call:
-  secrets:
-    SNYK_TOKEN:
-      required: true
+    secrets:
+      SNYK_TOKEN:
+        required: true
       
 
 # on:
