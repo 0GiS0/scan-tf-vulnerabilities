@@ -1,0 +1,25 @@
+name: IaC scans
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+- template: .ado/templates/snyk.yml
