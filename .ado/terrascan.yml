@@ -9,7 +9,7 @@ trigger:
       - .github/**
       - README.md
 
-pull_request:
+pr:
   branches:
     include:
       - main
