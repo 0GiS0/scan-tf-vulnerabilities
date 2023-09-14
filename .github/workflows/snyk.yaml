@@ -5,14 +5,17 @@ on:
     secrets:
       SNYK_TOKEN:
         required: true
+    inputs:
+      working-directory:
+        description: 'The directory to run Snyk in'
+        type: string
+        required: false
+        default: '.'
 
 jobs:
   snyk:
     env:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    # permissions:
-    #   contents: read # for actions/checkout to fetch code
-    #   security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +25,7 @@ jobs:
       # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
       - name: Snyk IaC test and report
         continue-on-error: true
+        working-directory: ${{ inputs.working-directory }}
         run: |
           snyk iac test --sarif || true
           snyk iac test --sarif > snyk-iac.sarif || true       
