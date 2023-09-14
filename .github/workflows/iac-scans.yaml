@@ -16,20 +16,22 @@ jobs:
   checkov:
     permissions:
       contents: read
-      security-events: write    
+      security-events: write
     uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/checkov.yaml@main
   trivy:
     permissions:
       contents: read
-      security-events: write    
+      security-events: write
     uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/trivy.yaml@main
   terrascan:
     permissions:
       contents: read
       security-events: write
     uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/terrascan.yaml@main
-  # snyk:   
-  #   permissions:
-  #     contents: read
-  #     security-events: write    
-  #   uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/snyk.yaml@main
+  snyk:
+    permissions:
+      contents: read
+      security-events: write
+    uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/snyk.yaml@main
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

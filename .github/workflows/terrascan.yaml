@@ -8,8 +8,7 @@ jobs:
     permissions:
       contents: read
       security-events: write  
-    runs-on: ubuntu-latest
-    name: terrascan-action
+    runs-on: ubuntu-latest    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2

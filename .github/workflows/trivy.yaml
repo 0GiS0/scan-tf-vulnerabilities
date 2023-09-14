@@ -7,8 +7,7 @@ jobs:
   scan:
     permissions:
       contents: read
-      security-events: write  
-    name: Build
+      security-events: write      
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
