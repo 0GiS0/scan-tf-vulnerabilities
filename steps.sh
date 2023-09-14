@@ -5,7 +5,8 @@
 
 # Tfsec > Trivy
 # ------------------------------------------------------------------------------
-trivy config .
+trivy config . 
+trivy config  --format table --exit-code  0 --severity  UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL  .
 
 # Scan using checkov
 # ------------------------------------------------------------------------------

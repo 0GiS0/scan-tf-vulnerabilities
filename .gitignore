@@ -1,2 +1,3 @@
 results.sarif
 snyk-iac.sarif
+trivy-results.sarif
