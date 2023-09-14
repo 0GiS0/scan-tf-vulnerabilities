@@ -22,4 +22,9 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- template: .ado/templates/snyk.yml
+  - template: "/.ado/templates/snyk.yml"
+    parameters:
+      SNYK_TOKEN: $(SNYK_TOKEN)
+  - template: "/.ado/templates/checkov.yml"
+  - template: "/.ado/templates/terrascan.yml"
+  - template: "/.ado/templates/trivy.yml"

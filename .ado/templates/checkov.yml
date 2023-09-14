@@ -1,48 +1,25 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+parameters:
+  - name: working_directory
+    type: string
+    default: "."
 
-name: Checkov Scan
-
-trigger:
-  branches:
-    include:
-      - main
-  paths:
-    exclude:
-      - .github/**
-      - README.md
-
-pr:
-  branches:
-    include:
-      - main
-  paths:
-    exclude:
-      - .github/**
-      - README.md
-
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-  - task: Bash@3
-    displayName: 'Install checkov'
-    inputs:
-      targetType: 'inline'
-      script: 'pip3 install checkov'
-  - task: Bash@3
-    displayName: 'Checkov Static Code Analysis'
-    continueOnError: true
-    inputs:
-      targetType: 'inline'
-      script: |
-        checkov -f *.tf -o sarif -o cli        
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: 'results.sarif'
-      ArtifactName: 'CodeAnalysisLogs'
-      publishLocation: 'Container'
-
+jobs:
+  - job: Checkov
+    steps:
+      - task: Bash@3
+        displayName: "Install checkov"
+        inputs:
+          targetType: "inline"
+          script: "pip3 install checkov"
+      - task: Bash@3
+        displayName: "Checkov Static Code Analysis"
+        continueOnError: true
+        inputs:
+          targetType: "inline"
+          script: |
+            checkov -d ${{ parameters.working_directory }} -o sarif -o cli
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: "results.sarif"
+          ArtifactName: "CodeAnalysisLogs"
+          publishLocation: "Container"

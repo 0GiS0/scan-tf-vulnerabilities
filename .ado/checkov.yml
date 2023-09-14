@@ -1,0 +1,41 @@
+name: Checkov Scan
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Bash@3
+    displayName: "Install checkov"
+    inputs:
+      targetType: "inline"
+      script: "pip3 install checkov"
+  - task: Bash@3
+    displayName: "Checkov Static Code Analysis"
+    continueOnError: true
+    inputs:
+      targetType: "inline"
+      script: |
+        checkov -f *.tf -o sarif -o cli
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "results.sarif"
+      ArtifactName: "CodeAnalysisLogs"
+      publishLocation: "Container"

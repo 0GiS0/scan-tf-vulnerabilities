@@ -1,5 +1,12 @@
+parameters:
+  - name: SNYK_TOKEN # name of the parameter; required
+    type: string # data type of the parameter; required
+  - name: working_directory
+    type: string
+    default: "."
+
 jobs:
-  - job: Snyk scan
+  - job: Snyk
     steps:
       - task: CmdLine@2
         displayName: "Install Snyc CLI"
@@ -10,16 +17,16 @@ jobs:
             mv ./snyk /usr/local/bin/
       - task: CmdLine@2
         displayName: "Scan Terraform files"
-        inputs:      
-          script: snyk config set api=$(SNYK_TOKEN)
+        inputs:
+          script: snyk config set api=${{ parameters.SNYK_TOKEN }}
       - task: CmdLine@2
         displayName: "Scan Terraform files"
         inputs:
           script: |
-            snyk iac test --sarif
-            snyk iac test --sarif > $(Build.ArtifactStagingDirectory)/snyk-iac.sarif || true 
+            snyk iac test ${{ parameters.working_directory }} --sarif
+            snyk iac test ${{ parameters.working_directory }} --sarif > $(Build.ArtifactStagingDirectory)/snyk-iac.sarif || true
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/snyk-iac.sarif'
-          ArtifactName: 'CodeAnalysisLogs'
-          publishLocation: 'Container'
+          PathtoPublish: "$(Build.ArtifactStagingDirectory)/snyk-iac.sarif"
+          ArtifactName: "CodeAnalysisLogs"
+          publishLocation: "Container"

@@ -1,0 +1,53 @@
+name: "Terrascan Scan"
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Bash@3
+    displayName: "Install terrascan"
+    inputs:
+      targetType: "inline"
+      script: |
+        curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_x86_64.tar.gz")" > terrascan.tar.gz
+        tar -xf terrascan.tar.gz terrascan && rm terrascan.tar.gz
+        install terrascan /usr/local/bin && rm terrascan
+        terrascan
+
+  - task: Bash@3
+    displayName: "Downloads the latest policies"
+    inputs:
+      targetType: "inline"
+      script: |
+        terrascan init
+  - task: Bash@3
+    continueOnError: true
+    displayName: "Scan the terraform files"
+    inputs:
+      targetType: "inline"
+      script: |
+        terrascan scan -t azure -f *.tf
+        terrascan scan -t azure -f *.tf -o sarif > results.sarif
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "results.sarif"
+      ArtifactName: "CodeAnalysisLogs"
+      publishLocation: "Container"
