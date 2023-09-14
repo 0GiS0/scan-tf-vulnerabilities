@@ -10,9 +10,6 @@ on:
         default: "."
 jobs:
   scan:
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
     permissions:
       contents: read
       security-events: write
@@ -31,7 +28,7 @@ jobs:
           # only_warn: true
           sarif_upload: true
           #non_recursive:
-          #iac_dir:
+          iac_dir: ${{ inputs.working-directory }}
           #policy_path:
           #skip_rules:
           #config_path:
