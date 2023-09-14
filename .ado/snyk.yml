@@ -3,6 +3,8 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+name: Synk scan
+
 trigger:
   - main
 
@@ -10,7 +12,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - task: Bash@3
+  - task: CmdLine@2
     displayName: "Install Snyc CLI"
     inputs:
       script: |
