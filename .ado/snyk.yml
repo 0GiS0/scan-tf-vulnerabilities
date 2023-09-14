@@ -14,11 +14,11 @@ steps:
        curl --compressed https://static.snyk.io/cli/latest/snyk-linux -o snyk
        chmod +x ./snyk
        mv ./snyk /usr/local/bin/
-  - task: Bash@3
-    inputs:
-      targetType: 'inline'
-      script: 'snyk config set api=$(SNYK_TOKEN)'
-  - task: Bash@3
+  - task: CmdLine@2
+    displayName: "Scan Terraform files"
+    inputs:      
+      script: snyk config set api=$(SNYK_TOKEN)
+  - task: CmdLine@2
     displayName: "Scan Terraform files"
     inputs:
       script: |
