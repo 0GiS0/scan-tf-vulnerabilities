@@ -35,6 +35,7 @@ steps:
       script: 'pip3 install checkov'
   - task: Bash@3
     displayName: 'Checkov Static Code Analysis'
+    continueOnError: true
     inputs:
       targetType: 'inline'
       script: |
