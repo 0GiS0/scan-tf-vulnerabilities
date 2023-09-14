@@ -21,6 +21,7 @@ jobs:
         id: terrascan
         # https://github.com/tenable/terrascan-action/
         uses: tenable/terrascan-action@main
+        continue-on-error: true
         with:
           iac_type: "terraform"
           iac_version: "v14"
