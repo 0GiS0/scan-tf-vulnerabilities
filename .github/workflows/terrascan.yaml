@@ -21,7 +21,7 @@ jobs:
         id: terrascan
         # https://github.com/tenable/terrascan-action/
         uses: tenable/terrascan-action@main
-        continue-on-error: true
+        # continue-on-error: true
         with:
           iac_type: "terraform"
           iac_version: "v14"
@@ -34,9 +34,10 @@ jobs:
           #skip_rules:
           #config_path:
 
-      - name: Inspect working directory
-        run: ls -la
+      # - name: Inspect working directory
+      #   run: ls -la
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
+        if: success() || failure()
         with:
           sarif_file: terrascan.sarif

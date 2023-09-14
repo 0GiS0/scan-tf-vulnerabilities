@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Trivy vulnerability scanner in IaC mode generate SARIF file
         uses: aquasecurity/trivy-action@master
-        continue-on-error: true
+        # continue-on-error: true
         with:
           scan-type: 'config'
           hide-progress: false
@@ -42,9 +42,10 @@ jobs:
           ignore-unfixed: true
           scan-ref: ${{ inputs.working-directory }}
           # severity: 'CRITICAL,HIGH'          
-      - name: Inspect working directory        
-        run: ls -la
+      # - name: Inspect working directory        
+      #   run: ls -la
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
+        if: success() || failure()
         with:
           sarif_file: trivy-results.sarif

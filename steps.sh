@@ -12,7 +12,7 @@ trivy config  --format table --exit-code  0 --severity  UNKNOWN,LOW,MEDIUM,HIGH,
 # ------------------------------------------------------------------------------
 checkov -h
 # Scan only terraform files
-checkov -f *.tf
+checkov -d . --output cli --output sarif --output-file-path console,results.sarif --soft-fail    
 
 # Scan using terrascan
 # ------------------------------------------------------------------------------
