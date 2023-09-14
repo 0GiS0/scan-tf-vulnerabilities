@@ -33,7 +33,6 @@ jobs:
       contents: read
       security-events: write
     uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/snyk.yaml@main
-    secrets: inherit
       
     
     
