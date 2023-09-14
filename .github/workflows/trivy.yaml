@@ -10,7 +10,11 @@ on:
         default: '.'
 
 jobs:
+  
   scan:
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     permissions:
       contents: read
       security-events: write      
@@ -28,10 +32,9 @@ jobs:
           output: 'trivy-results.sarif'
           exit-code: '1'
           ignore-unfixed: true
-          # severity: 'CRITICAL,HIGH'
-          working-directory: ${{ inputs.working-directory }}
+          # severity: 'CRITICAL,HIGH'          
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: ${{ inputs.working-directory }}/trivy-results.sarif
+          sarif_file: trivy-results.sarif
