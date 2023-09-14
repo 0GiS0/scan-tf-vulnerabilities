@@ -35,6 +35,3 @@ jobs:
     uses: 0GiS0/scan-tf-vulnerabilities/.github/workflows/snyk.yaml@main
     secrets:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    
-    
-    
