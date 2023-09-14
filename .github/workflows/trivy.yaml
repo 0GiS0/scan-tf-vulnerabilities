@@ -26,12 +26,12 @@ jobs:
       - name: Run Trivy vulnerability scanner in IaC mode show as table
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'github'
+          scan-type: 'config'
           hide-progress: false
-          format: 'table'         
+          format: 'github'         
           exit-code: '0'
           ignore-unfixed: true
-
+           
 
       - name: Run Trivy vulnerability scanner in IaC mode generate SARIF file
         uses: aquasecurity/trivy-action@master
