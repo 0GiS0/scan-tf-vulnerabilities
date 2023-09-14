@@ -1,7 +1,22 @@
 name: Synk scan
 
 trigger:
-  - main
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
+
+pull_request:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - .github/**
+      - README.md
 
 pool:
   vmImage: ubuntu-latest
