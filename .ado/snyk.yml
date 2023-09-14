@@ -21,9 +21,8 @@ steps:
        mv ./snyk /usr/local/bin/
   - task: CmdLine@2
     displayName: "Scan Terraform files"
-    inputs:
-      targetType: 'inline'
-      script: 'snyk config set api=$(SNYK_TOKEN)'
+    inputs:      
+      script: snyk config set api=$(SNYK_TOKEN)
   - task: CmdLine@2
     displayName: "Scan Terraform files"
     inputs:
