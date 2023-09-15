@@ -9,8 +9,7 @@
 		"ghcr.io/devcontainers-contrib/features/snyk-cli:1": {},
 		"ghcr.io/devcontainers-contrib/features/terrascan:1": {},
 		// "ghcr.io/dhoeric/features/tfsec:1": {},
-		"ghcr.io/dhoeric/features/trivy:1": {},
-		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {}
+		"ghcr.io/dhoeric/features/trivy:1": {}
 	},
 	"customizations": {
 		"vscode": {

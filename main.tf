@@ -1,10 +1,3 @@
-# Terraform state in Azure Storage
-terraform {
-  backend "azurerm" {
-    key = "tour-of-heroes-tf-state"
-  }
-}
-
 # Azure provider
 provider "azurerm" {
   features {}
@@ -58,11 +51,6 @@ resource "azurerm_service_plan" "plan" {
   name                = "tour-of-heroes-plan"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-
-  # sku {
-  #   tier = "Standard"
-  #   size = "S1"
-  # }
 
   os_type = "Windows"
 
