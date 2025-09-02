@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up Snyk CLI to check for security issues
-        uses: snyk/actions/setup@cdb760004ba9ea4d525f2e043745dfe85bb9077e
+        uses: snyk/actions/setup@e2221410bff24446ba09102212d8bc75a567237d
               
       # Runs Snyk Infrastructure as Code (IaC) analysis and uploads result to Snyk.
       - name: Snyk IaC test and report
